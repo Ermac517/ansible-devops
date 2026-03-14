@@ -1,5 +1,5 @@
 Vagrant.configure("2") do |config|
-  config.vm.box = "generic/rocky8"
+  config.vm.box = "generic/rocky9"
 
   # DHCP on libvirt network
   config.vm.network "private_network", type: "dhcp"
@@ -11,4 +11,8 @@ Vagrant.configure("2") do |config|
 
   config.ssh.insert_key = false
   config.vm.boot_timeout = 600
+  config.vm.provision "ansible" do |ansible|
+    ansible.playbook = "playbook.yml"
+    ansible.inventory_path = "hosts.ini"
+  end
 end

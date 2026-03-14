@@ -63,3 +63,33 @@ ansible -i hosts.ini rocky -m ping
 ```
 
 Expected result includes `"ping": "pong"` for the target host.
+
+### 6. Run the Ansible playbook via Vagrant provisioning
+
+Trigger Vagrant to run `playbook.yml` against the VM using the Ansible provisioner.
+The playbook ensures the `chrony` NTP package is installed and the `chronyd` service
+is running and enabled on the guest.
+
+```bash
+vagrant provision
+```
+
+Expected output:
+
+```
+PLAY [all] *********************************************************************
+
+TASK [Gathering Facts] *********************************************************
+ok: [default]
+
+TASK [Ensure chrony is installed] **********************************************
+ok: [default]
+
+TASK [Ensure chronyd service is started and enabled] ***************************
+ok: [default]
+
+PLAY RECAP *********************************************************************
+default                    : ok=3    changed=0    unreachable=0    failed=0    skipped=0    rescued=0    ignored=0
+```
+
+All three tasks should show `ok`, and the recap must have `failed=0`.
