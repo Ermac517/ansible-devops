@@ -59,7 +59,7 @@ sudo dnf -y install python39
 Run a connectivity test to confirm Ansible can reach the target host from your inventory.
 
 ```bash
-ansible -i hosts.ini ansible_target -m ping
+ansible -i hosts.ini rocky -m ping
 ```
 
 Expected result includes `"ping": "pong"` for the target host.
