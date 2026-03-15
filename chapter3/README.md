@@ -99,3 +99,10 @@ ansible multi -m copy -a "src=/etc/hosts dest=/tmp/hosts"
 ansible multi -b -m fetch -a "src=/etc/hosts dest=/tmp"
 ansible multi -m file -a "dest=/tmp/test mode=644 state=directory"
 ```
+
+### 14. Check log files
+
+```bash
+ansible multi -b -a "tail /var/log/messages"
+ansible multi -b -m shell -a "tail /var/log/messages | grep ansible-command | wc -l"
+```
