@@ -40,6 +40,7 @@ python -m pip install ansible-dev-tools
 ### 3. Start Vagrant VM
 
 Provision and boot the virtual machine defined in `Vagrantfile`.
+The VM uses a fixed private IP so Ansible and Vagrant both target the same host.
 
 ```bash
 vagrant up
@@ -56,7 +57,7 @@ sudo dnf -y install python39
 
 ### 5. Run Ansible ping
 
-Run a connectivity test to confirm Ansible can reach the target host from your inventory.
+Run a connectivity test to confirm Ansible can reach the Vagrant VM at `172.28.128.10`.
 
 ```bash
 ansible -i hosts.ini rocky -m ping
@@ -68,7 +69,13 @@ Expected result includes `"ping": "pong"` for the target host.
 
 Trigger Vagrant to run `playbook.yml` against the VM using the Ansible provisioner.
 The playbook ensures the `chrony` NTP package is installed and the `chronyd` service
-is running and enabled on the guest.
+is running and enabled on the guest. If the VM was already created before this
+network change, recreate it once so the fixed IP is applied.
+
+```bash
+vagrant destroy -f
+vagrant up
+```
 
 ```bash
 vagrant provision
